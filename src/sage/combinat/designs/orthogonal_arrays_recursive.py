@@ -235,7 +235,7 @@ def simple_wilson_construction(k,r,m,u):
 
     .. TODO::
 
-        As soon as wilson construction accepts an empty master design we should
+        As soon as wilson construction accepts an empty main design we should
         remove this intermediate functions.
 
     EXAMPLES::
@@ -430,11 +430,11 @@ def construction_3_4(k,n,m,r,s):
     """
     from orthogonal_arrays import wilson_construction, OA_relabel
     assert s<n
-    master_design = orthogonal_array(k+r+1,n)
+    main_design = orthogonal_array(k+r+1,n)
 
     # Defines the first k+r columns of the matrix of labels
     matrix = [range(n)]*k + [[None]*n]*(r) + [[None]*n]
-    B0 = master_design[0]
+    B0 = main_design[0]
     for i in range(k,k+r):
         matrix[i][B0[i]] = 0
 
@@ -449,7 +449,7 @@ def construction_3_4(k,n,m,r,s):
     for i,x in enumerate(last_group):
         matrix[-1][x] = i
 
-    OA = OA_relabel(master_design,k+r+1,n, matrix=matrix)
+    OA = OA_relabel(main_design,k+r+1,n, matrix=matrix)
     OA = wilson_construction(OA,k,n,m,r+1,[1]*r+[s],check=False)
     return OA
 
@@ -538,14 +538,14 @@ def construction_3_5(k,n,m,r,s,t):
     assert r <= s
     q = n
     assert (q-r-1)*(q-s) >= (q-s-1)*(q-r)
-    master_design = orthogonal_array(k+3,q)
+    main_design = orthogonal_array(k+3,q)
 
     # group k+1 has cardinality r
     # group k+2 has cardinality s
     # group k+3 has cardinality t
 
     # Taking q-s blocks going through 0 in the last block
-    blocks_crossing_0 = [B[-3:] for B in master_design if B[-1] == 0][:q-s]
+    blocks_crossing_0 = [B[-3:] for B in main_design if B[-1] == 0][:q-s]
 
     # defining the undeleted points of the groups k+1,k+2
     group_k_1 = [x[0] for x in blocks_crossing_0]
@@ -556,7 +556,7 @@ def construction_3_5(k,n,m,r,s,t):
 
     # All blocks that have a deleted point in groups k+1 and k+2 MUST contain a
     # point in group k+3
-    group_k_3 = [B[-1] for B in master_design if B[-3] not in group_k_1 and B[-2] not in group_k_2]
+    group_k_3 = [B[-1] for B in main_design if B[-3] not in group_k_1 and B[-2] not in group_k_2]
     group_k_3 = list(set(group_k_3))
     assert len(group_k_3) <= t
     group_k_3.extend([x for x in range(q) if x not in group_k_3])
@@ -573,7 +573,7 @@ def construction_3_5(k,n,m,r,s,t):
     for i,x in enumerate(group_k_3):
         r3[x] = i
 
-    OA = OA_relabel(master_design, k+3,q, matrix=[range(q)]*k+[r1,r2,r3])
+    OA = OA_relabel(main_design, k+3,q, matrix=[range(q)]*k+[r1,r2,r3])
     OA = wilson_construction(OA,k,q,m,3,[r,s,t], check=False)
     return OA
 

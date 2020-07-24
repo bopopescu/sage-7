@@ -437,7 +437,7 @@ def wilson_construction(OA,k,r,m,n_trunc,u,check=True):
         41
     """
     n = r*m+sum(u)
-    master_design = OA
+    main_design = OA
 
     assert n_trunc == len(u)
 
@@ -453,7 +453,7 @@ def wilson_construction(OA,k,r,m,n_trunc,u,check=True):
     # Building the actual design ! The set of integers is :
     # 0*m+0...0*m+(m-1)|...|(r-1)m+0...(r-1)m+(m-1)|mr+0...mr+(r1-1)|mr+r1...mr+r1+r2-1
     OA = []
-    for B in master_design:
+    for B in main_design:
         # The missing entries belong to the last n_trunc columns
         assert all(x is not None for x in B[:k])
         n_in_truncated = n_trunc-B.count(None)
